@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # ----------------------------------------
+  # SERVICIO 1: PostgreSQL con persistencia
+  # ----------------------------------------
+  postgres_db:
+    image: postgres:latest
+    container_name: servidor_postgres_compose
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=mi_basedatos
+    ports:
+      - "5432:5432"
+    volumes:
+      - volumen_postgres:/var/lib/postgresql/data
+
+  # ----------------------------------------
+  # SERVICIO 2: MySQL con persistencia
+  # ----------------------------------------
+  mysql_db:
+    image: mysql:latest
+    container_name: servidor_mysql_compose
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpass
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=123456
+      - MYSQL_DATABASE=mi_basedatos
+    ports:
+      - "3306:3306"
+    volumes:
+      - volumen_mysql:/var/lib/mysql
+
+# ----------------------------------------
+# DECLARACIÓN DE VOLÚMENES GLOBALES
+# ----------------------------------------
+volumes:
+  volumen_postgres:
+    name: datos_postgres_compose
+  volumen_mysql:
+    name: datos_mysql_compose
